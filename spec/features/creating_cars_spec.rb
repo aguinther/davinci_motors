@@ -14,28 +14,56 @@ feature 'Creating Cars' do
 
     expect(page).to have_content('1967 Ford Mustang has been created')
 
-    expect(page).to have_content('Ford')
-    expect(page).to have_content('Mustang')
-    expect(page).to have_content('1967')
-    expect(page).to have_content('2300')
+    within('table') do
+      expect(page).to have_content('Ford')
+      expect(page).to have_content('Mustang')
+      expect(page).to have_content('1967')
+      expect(page).to have_content('$2,300')
+    end
   end
 
   scenario 'can create a second car' do
+    Car.create(
+      make: 'Ford',
+      model: 'Mustang',
+      year: '1967',
+      price: '2300'
+    )
+
     visit '/'
+
+    within('table') do
+      expect(page).to have_content('Ford')
+      expect(page).to have_content('Mustang')
+      expect(page).to have_content('1967')
+      expect(page).to have_content('$2,300')
+    end
+
     click_link 'New Car'
 
     fill_in 'Make', with: 'Toyota'
-    fill_in 'Model', with: 'Rav4'
-    fill_in 'Year', with: '2013'
-    fill_in 'Price', with: '22000'
+    fill_in 'Model', with: 'Camry'
+    fill_in 'Year', with: '1987'
+    fill_in 'Price', with: '4500'
 
     click_button 'Create Car'
 
-    expect(page).to have_content('2013 Toyota Rav4 has been created')
+    expect(page).to have_content('1987 Toyota Camry has been created')
 
-    expect(page).to have_content('Toyota')
-    expect(page).to have_content('Rav4')
-    expect(page).to have_content('2013')
-    expect(page).to have_content('22000')
+    expect(page).to have_selector('#my_cars tr', :count => 3)
+
+    within('#my_cars') do
+      expect(page).to have_content('Ford')
+      expect(page).to have_content('Mustang')
+      expect(page).to have_content('1967')
+      expect(page).to have_content('$2,300')
+    end
+
+    within('#my_cars') do
+      expect(page).to have_content('Toyota')
+      expect(page).to have_content('Camry')
+      expect(page).to have_content('1987')
+      expect(page).to have_content('$4,500')
+    end
   end
 end

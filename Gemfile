@@ -28,6 +28,8 @@ gem 'spring',        group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
+gem 'faker'
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -42,10 +44,15 @@ gem 'rspec-rails'
 gem 'guard-bundler'
 gem  'guard-rspec'
 gem 'factory_girl_rails'
+
 # group :test, :darwin, :development do
 #   gem 'ruby_gntp'
 # end
 
 group :test do
   gem 'capybara'
+  gem 'launchy'
+  gem 'shoulda-matchers'
 end
+
+gem 'will_paginate'

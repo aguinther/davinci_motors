@@ -20,10 +20,11 @@ feature 'Editing Cars' do
 
     expect(page).to have_content('2013 Toyota Rav4 has been edited')
 
-    expect(page).to have_content('Toyota')
-    expect(page).to have_content('Rav4')
-    expect(page).to have_content('2013')
-    expect(page).to have_content('23000')
-
+    within('#my_cars') do
+      expect(page).to have_content('Toyota')
+      expect(page).to have_content('Rav4')
+      expect(page).to have_content('2013')
+      expect(page).to have_content('$23,000')
+    end
   end
 end
